@@ -75,4 +75,4 @@ See `CONTRIBUTING.md`.
 
 ## License
 
-TBD
+MIT. See `LICENSE`.
