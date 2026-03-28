@@ -25,10 +25,12 @@ python main/main.py help
 
 ## Usage
 
-Current behavior is `help` only.
+Current behavior includes `help`, `list`, and `add`.
 
 ```text
 python main/main.py help
+python main/main.py list
+python main/main.py add build "python -m pytest -q"
 ```
 
 ## CLI Contract
@@ -53,7 +55,7 @@ wiz run build
 
 ## Config
 
-Draft format (subject to change):
+Stored at `main/config.json` (next to `main.py`). Format is JSON:
 
 ```json
 {
