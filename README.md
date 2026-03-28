@@ -20,17 +20,20 @@ Status: pre-alpha. The CLI is in early scaffolding.
 Not packaged yet. Run from source:
 
 ```text
-python main/main.py help
+pip install -r requirements.txt
+python -m main.main help
 ```
 
 ## Usage
 
-Current behavior includes `help`, `list`, and `add`.
+Current behavior includes `help`, `list`, `add`, `delete`, and `replace`.
 
 ```text
-python main/main.py help
-python main/main.py list
-python main/main.py add build "python -m pytest -q"
+python -m main.main help
+python -m main.main list
+python -m main.main add build "python -m pytest -q"
+python -m main.main delete build
+python -m main.main replace build "python -m pytest"
 ```
 
 ## CLI Contract
@@ -43,6 +46,7 @@ Planned interface (draft):
 - `wiz list`
 - `wiz help`
 - `wiz export`
+- `wiz replace <name> <command>`
 
 Example usage:
 
