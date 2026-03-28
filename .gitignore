@@ -1,4 +1,3 @@
-main/__pycache__/
 *.py[cod]
 *.pyo
 
@@ -35,3 +34,5 @@ Icon?
 
 # App data
 main/config.json
+docs.bat
+main/__pycache__/

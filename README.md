@@ -26,20 +26,30 @@ python -m main.main help
 
 ## Usage
 
-Current behavior includes `help`, `list`, `add`, `delete`, `replace`, and `run`.
+Current behavior includes `help`, `list`, `add`, `delete`, `replace`, `run`, and `export`.
 
 ```text
 python -m main.main help
 python -m main.main list
 python -m main.main add build "python -m pytest -q"
 python -m main.main run build
+python -m main.main export
 python -m main.main delete build
 python -m main.main replace build "python -m pytest"
+python -m main.main --no-color list
+python -m main.main --version
 ```
+
+## Flags
+
+- `--version` prints the Wiz version and exits
+- `--no-color` disables colored output
+
+Note: flags must appear before the command.
 
 ## CLI Contract
 
-Planned interface (draft):
+Supported commands:
 
 - `wiz add <name> <command>`
 - `wiz delete <name>`
@@ -56,6 +66,7 @@ wiz add build "python -m pytest -q"
 wiz add serve "python -m http.server 8000"
 wiz list
 wiz run build
+wiz export
 ```
 
 ## Config
