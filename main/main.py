@@ -3,6 +3,9 @@ from textwrap import dedent
 from pathlib import Path
 from json import dump, load
 from .console import make_console
+from shutil import which
+from subprocess import run as _run
+from rich.prompt import Confirm
 
 HELP_TEXT = dedent ("""
         Usage:
@@ -20,11 +23,12 @@ HELP_TEXT = dedent ("""
 class Commands :
     def __init__ (self) -> None :
         self.commands = {
-            "list" : {"func" : self.list, "subcmd" : False, "rest" : False},
-            "help" : {"func" : self.help, "subcmd" : False, "rest" : False},
+            "list" : {"func" : self.list},
+            "help" : {"func" : self.help},
             "add" : {"func" : self.add, "subcmd" : True, "rest" : True},
             "replace" : {"func" : self.replace, "subcmd" : True, "rest" : True},
-            "delete" : {"func" : self.delete, "subcmd" : True, "rest" : False}
+            "delete" : {"func" : self.delete, "subcmd" : True},
+            "run" : {"func" : self.run, "subcmd" : True}
         }
         self.console = make_console ()
         self.BASE_DIR : Path = Path (__file__).resolve ().parent
@@ -67,6 +71,23 @@ class Commands :
         self.write_config ()
         self.console.print (f"[success]Successfully replaced alias '{alias}' with command '{command}'.[/]")
 
+    def run (self, alias : str) -> None :
+        if alias not in self.aliases :
+            self.console.print (f"[error]ERROR[/]: '{alias}' does not exist.")
+            return
+
+        command : str = self.aliases [alias]
+
+        exe = command.split () [0]
+        if not which (exe) :
+            confirm = Confirm.ask (f"[error]ERROR[/]: command '{command}' not found. Proceed anyway?")
+            if not confirm :
+                return
+
+        result = _run (command, shell = True)
+        if result.returncode != 0 :
+            self.console.print (f"[error]ERROR[/]: command exited with {result.returncode}.")
+
     def write_config (self) -> None :
         with open (self.config_path, "w") as f :
             dump (self.aliases, f, indent = 4)
@@ -80,24 +101,26 @@ def parse_tokens (tokens : list) -> tuple :
     return command, subcmd, rest
 
 def run_command (commands : Commands, command : str, subcmd : str | None, rest : str) -> None :
-    entry = commands.commands.get (command)
+    entry : dict = commands.commands.get (command, {})
 
-    if entry is None :
+    if not entry :
         commands.console.print (f"[error]ERROR[/]: unknown command '{command}'")
         return
 
-    if not entry ["subcmd"] :
+    if not entry.get ("subcmd", False) :
         entry ["func"] ()
         return
     if not subcmd :
         commands.console.print (f"[error]ERROR[/]: '{command}' missing arguments.")
         return
-    if entry ["rest"] :
+    if entry.get ("rest", False) :
         if not rest :
             commands.console.print (f"[error]ERROR[/]: '{command}' missing arguments.")
             return
         entry ["func"] (subcmd, rest)
     else :
+        if rest :
+            commands.console.print (f"[error]ERROR:[/] {command} does not accept extra tokens.")
         entry ["func"] (subcmd)
 
 if __name__ == "__main__" :
