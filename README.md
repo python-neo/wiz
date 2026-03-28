@@ -26,12 +26,13 @@ python -m main.main help
 
 ## Usage
 
-Current behavior includes `help`, `list`, `add`, `delete`, and `replace`.
+Current behavior includes `help`, `list`, `add`, `delete`, `replace`, and `run`.
 
 ```text
 python -m main.main help
 python -m main.main list
 python -m main.main add build "python -m pytest -q"
+python -m main.main run build
 python -m main.main delete build
 python -m main.main replace build "python -m pytest"
 ```
