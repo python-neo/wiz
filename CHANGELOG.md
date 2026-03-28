@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- 
+-
+
+## [0.6.0] - 2026-03-28
+
+### Added
+
+- `export` command for shell-friendly alias output
+- `--no-color` flag for disabling colors
+- `--version` flag for printing version
 
 ## [0.5.0] - 2026-03-28
 
@@ -55,11 +63,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Project structure
 - Initial documentation files
 
-[Unreleased]: https://gitlab.com/neo-bend-reality/wiz/-/compare/v0.5.0...main?from_project_id=80578770
+[Unreleased]: https://gitlab.com/neo-bend-reality/wiz/-/compare/v0.6.0...main?from_project_id=80578770
+[0.6.0]: https://gitlab.com/neo-bend-reality/wiz/-/compare/v0.5.0...v0.6.0?from_project_id=80578770
 [0.5.0]: https://gitlab.com/neo-bend-reality/wiz/-/compare/v0.4.0...v0.5.0?from_project_id=80578770
 [0.4.0]: https://gitlab.com/neo-bend-reality/wiz/-/compare/v0.3.0...v0.4.0?from_project_id=80578770
 [0.3.0]: https://gitlab.com/neo-bend-reality/wiz/-/compare/v0.2.0...v0.3.0?from_project_id=80578770
 [0.2.0]: https://gitlab.com/neo-bend-reality/wiz/-/compare/v0.1.1...v0.2.0?from_project_id=80578770
 [0.1.1]: https://gitlab.com/neo-bend-reality/wiz/-/compare/v0.1.0...v0.1.1?from_project_id=80578770
 [0.1.0]: https://gitlab.com/neo-bend-reality/wiz/-/compare/v0.0.1...v0.1.0?from_project_id=80578770
-[0.0.1]: https://gitlab.com/neo-bend-reality/wiz/-/compare/4b825dc642cb6eb9a060e54bf8d69288fbee4904...v0.0.1?from_project_id=80578770
+[0.0.1]: https://gitlab.com/neo-bend-reality/wiz/-/commit/2e3dc0b66a25bb1438dcfd45b523b57af2df1090
