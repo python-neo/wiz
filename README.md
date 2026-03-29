@@ -3,7 +3,7 @@
 Hacker-vibe command-line shortcut manager. Store frequently used commands as
 named shortcuts and run them instantly from any terminal.
 
-Status: pre-alpha. The CLI is in early scaffolding.
+Status: finished. The main CLI is now functional.
 
 ## Table of Contents
 
@@ -17,27 +17,42 @@ Status: pre-alpha. The CLI is in early scaffolding.
 
 ## Install
 
-Not packaged yet. Run from source:
+Download the installer from the releases page, unzip, and run the `.exe`.
+During setup, check the option to add Wiz to `PATH`.
+
+After installation, open a new terminal and run:
 
 ```text
-pip install -r requirements.txt
-python -m main.main help
+wiz help
 ```
+
+## Releases
+
+Latest release notes and downloads are published on GitLab:
+
+- [Releases](https://gitlab.com/neo-bend-reality/wiz/-/releases)
+
+## Wiki
+
+Project notes and guides live here:
+
+- [Wiki](https://gitlab.com/neo-bend-reality/wiz/-/wikis/home)
 
 ## Usage
 
-Current behavior includes `help`, `list`, `add`, `delete`, `replace`, `run`, and `export`.
+Current behavior includes `help`, `list`, `add`, `delete`, `replace`, `run`,
+and `export`.
 
-```text
-python -m main.main help
-python -m main.main list
-python -m main.main add build "python -m pytest -q"
-python -m main.main run build
-python -m main.main export
-python -m main.main delete build
-python -m main.main replace build "python -m pytest"
-python -m main.main --no-color list
-python -m main.main --version
+```bash
+wiz help
+wiz list
+wiz add build "python -m pytest -q"
+wiz run build
+wiz export
+wiz delete build
+wiz replace build "python -m pytest"
+wiz --no-color list
+wiz --version
 ```
 
 ## Flags
@@ -80,12 +95,9 @@ Stored at `main/config.json` (next to `main.py`). Format is JSON:
 }
 ```
 
-## Roadmap
+## Packaging
 
-- MVP CLI (add, delete, run, list)
-- Export to shell aliases
-- Search and tags
-- Usage stats
+To unpack the installer, you require the [7-Zip tool](https://www.7-zip.org/download.html).
 
 ## Contributing
 

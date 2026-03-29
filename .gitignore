@@ -36,3 +36,4 @@ Icon?
 main/config.json
 docs.bat
 main/__pycache__/
+/_build
