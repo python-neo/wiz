@@ -1,6 +1,7 @@
 from argparse import ArgumentParser, REMAINDER
 from textwrap import dedent
 from pathlib import Path
+import os
 from json import dump, load
 from .console import make_console
 from shutil import which
@@ -13,16 +14,16 @@ HELP_TEXT = dedent ("""
 
         Flags:
         [alias]--version[/]                      [command]Show version and exit[/]
-        [alias]--no-color[/]                      [command]Disable colored output[/]
+        [alias]--no-color[/]                     [command]Disable colored output[/]
 
         Commands:
-        [alias]add[/]                      [command]Add an alias to the manager[/]
-        [alias]delete[/]                   [command]Delete an alias from the manager[/]
-        [alias]export[/]                   [command]Export aliases for your shell[/]
-        [alias]run[/]                      [command]Run given alias[/]
-        [alias]list[/]                     [command]List all aliases[/]
-        [alias]help[/]                     [command]Show help for commands[/]
-        [alias]replace[/]                  [command]Replace an alias with another one[/]
+        [alias]add[/]                            [command]Add an alias to the manager[/]
+        [alias]delete[/]                         [command]Delete an alias from the manager[/]
+        [alias]export[/]                         [command]Export aliases for your shell[/]
+        [alias]run[/]                            [command]Run given alias[/]
+        [alias]list[/]                           [command]List all aliases[/]
+        [alias]help[/]                           [command]Show help for commands[/]
+        [alias]replace[/]                        [command]Replace an alias with another one[/]
     """).strip ()
 
 class Commands :
@@ -51,10 +52,16 @@ class Commands :
             "export" : {"func" : self.export}
         }
         self.console = make_console (no_color = no_color)
-        self.BASE_DIR : Path = Path (__file__).resolve ().parent
+        appdata = os.getenv ("APPDATA")
+        if appdata :
+            self.BASE_DIR : Path = Path (appdata) / "Wiz"
+        else :
+            self.BASE_DIR : Path = Path (__file__).resolve ().parent
         self.config_path : Path = self.BASE_DIR / "config.json"
         self.aliases : dict = {}
 
+        if not self.BASE_DIR.exists () :
+            self.BASE_DIR.mkdir (parents = True, exist_ok = True)
         if not self.config_path.exists () :
             self.write_config ()
         with open (self.config_path, "r") as f :
@@ -236,7 +243,7 @@ def run_command (commands : Commands, command : str, subcmd : str | None, rest :
 
 if __name__ == "__main__" :
     argparser = ArgumentParser (add_help = False)
-    argparser.add_argument ("--version", action = "version", version = "0.5.0", help = "Version for Wiz")
+    argparser.add_argument ("--version", action = "version", version = "0.6.2", help = "Version for Wiz")
     argparser.add_argument ("--no-color", action = "store_true", help = "Color toggle for Wiz")
     argparser.add_argument ("command", nargs = REMAINDER, help = "Commands for Wiz")
     args = argparser.parse_args ()
