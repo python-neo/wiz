@@ -4,7 +4,7 @@ import os
 project = 'Wiz'
 copyright = '2026, Aarav Agarwal'
 author = 'Aarav Agarwal'
-release = '0.5.0'
+release = '0.6.3'
 
 extensions = [
     "sphinx.ext.autodoc",
