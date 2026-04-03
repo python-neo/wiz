@@ -1,4 +1,5 @@
 from argparse import ArgumentParser, REMAINDER
+import sys
 from textwrap import dedent
 from pathlib import Path
 import os
@@ -121,9 +122,13 @@ class Commands :
         if not self.aliases :
             self.console.print ("[error]No aliases yet.[/]")
             return
-        for alias, command in self.aliases.items () :
-            self.console.print (f"doskey {alias}={command}")
+        if os.name == "nt" :
+            for alias, command in self.aliases.items () :
+                self.console.print (f"doskey {alias}={command}")
             return
+        for alias, command in self.aliases.items () :
+            safe = command.replace ("'", "'\"'\"'")
+            self.console.print (f"alias {alias}='{safe}'")
 
     def list (self) -> None :
         """
@@ -175,7 +180,11 @@ class Commands :
             if not confirm :
                 return
 
-        result = _run (command, shell = True)
+        if os.name == "nt" :
+            shell = os.getenv ("COMSPEC", "cmd.exe")
+        else :
+            shell = os.getenv ("SHELL", "/bin/sh")
+        result = _run (command, shell = True, executable = shell)
         if result.returncode != 0 :
             self.console.print (f"[error]ERROR[/]: command exited with {result.returncode}.")
 
@@ -242,13 +251,20 @@ def run_command (commands : Commands, command : str, subcmd : str | None, rest :
         entry ["func"] (subcmd)
 
 if __name__ == "__main__" :
-    argparser = ArgumentParser (add_help = False)
-    argparser.add_argument ("--version", action = "version", version = "0.6.2", help = "Version for Wiz")
-    argparser.add_argument ("--no-color", action = "store_true", help = "Color toggle for Wiz")
-    argparser.add_argument ("command", nargs = REMAINDER, help = "Commands for Wiz")
-    args = argparser.parse_args ()
+    raw = sys.argv [1:]
+    no_color = False
+    if "--no-color" in raw :
+        no_color = True
+        raw = [arg for arg in raw if arg != "--no-color"]
+    if "--version" in raw :
+        print ("0.6.3")
+        raise SystemExit (0)
 
-    commands = Commands (no_color = args.no_color)
+    argparser = ArgumentParser (add_help = False)
+    argparser.add_argument ("command", nargs = REMAINDER, help = "Commands for Wiz")
+    args = argparser.parse_args (raw)
+
+    commands = Commands (no_color = no_color)
     tokens : list = args.command
     command, subcmd, rest = parse_tokens (tokens)
     run_command (commands, command, subcmd, rest)

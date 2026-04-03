@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
--
+- 
+
+## [0.6.3] - 2026-04-03
+
+### Added
+
+- Linux-style alias lines for `export`
+- Shell-aware execution for `run` on Windows and Linux
+- Flags can appear before or after the command
+- Sphinx docs release updated to 0.6.3
 
 ## [0.6.0] - 2026-03-28
 
@@ -63,7 +72,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Project structure
 - Initial documentation files
 
-[Unreleased]: https://gitlab.com/neo-bend-reality/wiz/-/compare/v0.6.0...main?from_project_id=80578770
+[Unreleased]: https://gitlab.com/neo-bend-reality/wiz/-/compare/v0.6.3...main?from_project_id=80578770
+[0.6.3]: https://gitlab.com/neo-bend-reality/wiz/-/compare/v0.6.2...v0.6.3?from_project_id=80578770
 [0.6.0]: https://gitlab.com/neo-bend-reality/wiz/-/compare/v0.5.0...v0.6.0?from_project_id=80578770
 [0.5.0]: https://gitlab.com/neo-bend-reality/wiz/-/compare/v0.4.0...v0.5.0?from_project_id=80578770
 [0.4.0]: https://gitlab.com/neo-bend-reality/wiz/-/compare/v0.3.0...v0.4.0?from_project_id=80578770
